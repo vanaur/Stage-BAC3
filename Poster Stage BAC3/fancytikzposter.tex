@@ -1,0 +1,298 @@
+\documentclass{a0poster}
+
+\usepackage{fancytikzposter} 
+\usepackage[margin=\margin cm, paperwidth=84.1cm, paperheight=118.9cm]{geometry}
+
+\usepackage{cmbright}
+
+\usepackage{charter}
+%\usepackage[math]{kurier}
+\usetikzlibrary{babel}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{svg}
+\usepackage{tikz-cd}
+
+\usetemplate{2}
+\usebackgroundtemplate{1}
+
+\title{Introduction à la Théorie des Catégories}
+\author{Aurélien Vandeweyer\qquad Mattia Serrani\\
+Service de Physique de l'Univers, Champs et Gravitation, Université de Mons, Belgique
+}
+
+\setblockspacing{0.80}
+\setheaddrawingheight{14}
+\setmargin{4}
+
+\tikzcdset{scale cd/.style={every label/.append style={scale=#1},
+    cells={nodes={scale=#1}}}}
+
+\definecolor{azure(colorwheel)}{rgb}{0.0, 0.5, 1.0}
+
+\begin{document}
+
+%%%%% ---------- the background picture ---------- %%%%%
+\noindent
+\ClearShipoutPicture
+\AddToShipoutPicture{\BackgroundPicture}
+
+\noindent % to have the picture right in the center
+\begin{tikzpicture}
+	\initializesizeandshifts
+	% \setxshift{15}
+	% \setyshift{2}	
+
+	%% the title block, #1 - shift, the default value is (0,0), #2 - width, #3 - scale
+	%% the alias of the title block is `title', so we can refer to its boundaries later
+	\ifthenelse{\equal{\template}{1}}{ 
+		\titleblock{47}{1}
+		}{
+		\titleblock{47}{1.5}
+	}
+
+	\blocknode
+	{Introduction}
+	{
+        La théorie des catégories$^{[1]}$ est une branche fondamentale des mathématiques qui permet d'étudier des concepts en les généralisant grâce à des propriétés universelles communes, décrivant ainsi des structures générales indépendamment des détails spécifiques propres à chaque domaine.
+	}
+
+	%%%%%%%%%% ------------------------------------------ %%%%%%%%%%
+	\blocknode{Qu'est-ce qu'une catégorie ?}%
+	{
+        La définition que nous proposons$^{[2]}$ ne dépend d'aucune représentation particulière :\\
+
+		\coloredbox{colorthree!50!}
+		{
+			Une \textbf{catégorie} $\mathcal{C}$ consiste en
+			\begin{itemize}[label=\textcolor{azure(colorwheel)}{\textbullet}]
+				\item Une collection d'\textbf{objets} $A$, $B$, $C$, ...
+				\item Une collection de \textbf{morphismes} entre les objets $f$, $g$, $h$, ...
+			\end{itemize}
+			\medskip telle que les trois propriétés suivantes soient satisfaites : \smallskip
+			\begin{itemize}[label=\textcolor{azure(colorwheel)}{\textbullet}]
+				\item Une loi de \textbf{composition} : $A\xrightarrow{f}B\xrightarrow{g}C\implies g\circ f:A\to C$.
+				\item Une loi d'\textbf{identité} : $f\circ 1_A=f=1_B\circ f$.
+				\item Une loi d'\textbf{associativité} : $f\circ (g\circ h)=(f\circ g)\circ h$.
+			\end{itemize}
+		}
+	}
+	
+	\plainblock[3.5]{($24*(yshift)-(xshift)$)}{30cm}
+    {Ce sont les flèches qui comptent vraiment !}
+	{
+		\newline\newline
+        Un objet est entièrement caractérisé par son \textbf{morphisme identité}$^{[2]}$.
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+        A \arrow["1_A"', loop, distance=2em, in=215, out=145] \arrow[rr, "f"] \arrow[rrrr, "g\circ f", bend right] \&  \& B \arrow["1_B"', loop, distance=2em, in=125, out=55] \arrow[rr, "g"] \&  \& C \arrow["1_C"', loop, distance=2em, in=35, out=325]
+        \end{tikzcd}
+        \end{center}
+	}
+
+	\getcurrentrow{note}
+	\coordinate (currenty) at ($(currentrow)-(xshift)-0.6*(yshift)$);
+    
+    \blocknode{Exemples de catégories}
+    {
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Set} : Les objets sont les ensembles et les morphismes sont les fonctions.
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Pos} : Les objets sont les posets et les morphismes sont les fonctions monotones.
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Catégories finies} : la collection d'objets et de morphismes sont des ensembles finis.
+                    \begin{center}
+                    \begin{tikzcd}[ampersand replacement=\&]
+                    \star \arrow["1_\star"', loop, distance=2em, in=305, out=235] \&  \& \star \arrow["1_\star"', loop, distance=2em, in=305, out=235] \arrow[rr] \&  \& \ast \arrow["1_\ast"', loop, distance=2em, in=305, out=235] \&  \& \star \arrow["1_\star"', loop, distance=2em, in=125, out=55] \arrow[rr] \arrow[rrdd] \&  \& \ast \arrow["1_\ast"', loop, distance=2em, in=125, out=55] \arrow[dd] \\
+                                                                                  \&  \&                                                                          \&  \&                                                             \&  \&                                                                                      \&  \&                                                                       \\
+                                                                                  \&  \&                                                                          \&  \&                                                             \&  \&                                                                                      \&  \& \bullet \arrow["1_\bullet"', loop, distance=2em, in=35, out=325]    
+                    \end{tikzcd}
+                    \end{center}
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Monoïde} : Un monoïde est une catégorie d'un seul objet, les flèches sont les éléments du monoïde,
+
+            \begin{center}
+            \begin{tikzcd}[ampersand replacement=\&]
+            \star \arrow["x"', loop, distance=2em, in=35, out=325] \arrow["y"', loop, distance=2em, in=125, out=55] \arrow["1"', loop, distance=2em, in=215, out=145]
+            \end{tikzcd}
+            \quad Un exemple concret : \quad
+            \begin{tikzcd}[ampersand replacement=\&]
+            {\{\mathbb Z, +\}} \& \star \arrow["\text{Peano}"', loop, distance=2em, in=125, out=55]
+            \end{tikzcd}
+            \end{center}
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Groupe} : Un groupe $G$ est un monoïde munis d'un inverse, donc $G$ est une catégorie avec un seul objet et dont chaque morphisme est un isomorphisme.
+        }
+    }
+
+    
+	\plainblock[-3]{($-28.5*(yshift)-(xshift)$)}{32cm}
+    {Et si on inverse le sens des flèches ?}
+    {\newline\newline
+        La \textbf{catégorie opposée} $\mathcal C^\text{op}$ d'une catégorie $\mathcal C$ consiste à l'inversion des flèches :
+
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+        A \arrow[rr] \arrow[rrdd] \&  \& B \arrow[dd] \&  \& A^\text{op} \&  \& B^\text{op} \arrow[ll]              \\
+                                  \&  \&              \&  \&             \&  \&                                     \\
+                                  \&  \& C            \&  \&             \&  \& C^\text{op} \arrow[uu] \arrow[lluu]
+        \end{tikzcd}
+        \end{center}
+
+        \begin{itemize}[label=\textcolor{azure(colorwheel)}{\textbullet}]
+            \item $\left(\mathcal C^\text{op}\right)^\text{op}=\mathcal C$.
+            \item $\text{dom}(\mathcal C)=\text{cod}(\mathcal C^\text{op})$ et $\text{cod}(\mathcal C)=\text{dom}(\mathcal C^\text{op})$.
+            \item Un résultat prouvé dans une catégorie est également vrai dans sa catégorie duale.
+        \end{itemize}
+    }
+
+	\getcurrentrow{note}
+	\coordinate (currenty) at ($(currentrow)-(xshift)-0.8*(yshift)$);
+
+    \blocknode{Foncteurs}
+    {
+        Grossièrement, si $\mathcal C$ et $\mathcal D$ sont deux catégories, alors un \textbf{foncteur} $F:\mathcal C\to\mathcal D$ donne une "image" de la catégorie $\mathcal C$ dans la catégorie $\mathcal D$. En termes de diagrammes$^{[2]}$ :
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+        \mathcal C \arrow[dd, "F"'] \&  \& A \arrow[rr, "f"] \arrow[rrdd, "g\circ f"'] \&  \& B \arrow[dd, "g"] \&  \& F(A) \arrow[rr, "F(f)"] \arrow[rrdd, "F(g\circ f)"'] \&  \& F(B) \arrow[dd, "F(g)"] \\
+                                    \&  \&                                            \&  \&                   \&  \&                                                      \&  \&                         \\
+        \mathcal D                  \&  \&                                            \&  \& C                 \&  \&                                                      \&  \& F(C)                   
+        \end{tikzcd}
+        \end{center}
+
+        On parle ici de foncteurs \textbf{covariants}, mais il existe également des foncteurs \textbf{contravariants}.
+    }
+
+    \startsecondcolumn
+
+	\blocknode
+    {Applications entre foncteurs}
+	{
+        On peut établir des correspondances entre les foncteurs, appelées \textbf{transformations naturelles}. Leur composition est illustrée comme suit :
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+        A \arrow[dd, "f"'] \&  \& F \arrow[dd, "\eta"', azure(colorwheel)] \&  \& F(A) \arrow[rr, "\eta_A", azure(colorwheel)] \arrow[dd, "F(f)"'] \&  \& G(A) \arrow[dd, "G(f)"] \\
+                           \&  \&                       \&  \&                                               \&  \&                         \\
+        B                  \&  \& G                     \&  \& F(B) \arrow[rr, "\eta_B", azure(colorwheel)]                     \&  \& G(B)                   
+        \end{tikzcd}
+        \end{center}
+        \smallskip On dit que $\eta_X$ est la composante $X$ de la transformation naturelle $\eta$.
+	}
+
+	\plainblock[-3.5]{($36.5*(yshift)+(xshift)$)}{32cm}
+    {Et des isomorphismes ?}
+    {\newline\newline
+        Si $F\xrightarrow\eta G$ et $G\xrightarrow\nu F$ telles que $\eta\circ\nu=1$ alors cela définit un \textbf{isomorphisme naturel}, ce que l'on notera par $F\cong G$. Autrement dit, chaque composante de la transformation naturelle est un isomorphisme.
+    }
+
+	\getcurrentrow{note}
+	\coordinate (currenty) at ($(currentrow)+(xshift)-0.8*(yshift)$);
+
+    \blocknode
+    {Propriété universelle}
+    {
+        Pour définir une certaine notion au sens large, on utilise une \textbf{propriété universelle} (UMP) :
+        \begin{center}
+        \begin{tikzcd}[ampersand replacement=\&]
+        X \arrow[rr, "u", red] \arrow[rrdd, "f"'] \&  \& F(\textcolor{azure(colorwheel)}A) \arrow[dd, "F(m)", dashed] \&  \& \textcolor{azure(colorwheel)}A \arrow[dd, "\exists!m", dashed] \\
+                                             \&  \&                                 \&  \&                           \\
+                                             \&  \& F(A')                           \&  \& A'                       
+        \end{tikzcd}
+        \end{center}
+        \smallskip L'UMP est fréquemment définie comme une (ou plusieurs) condition d'existence.
+    }
+
+    \blocknode
+    {Exemples de propriétés universelles}
+    {
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Monoïde libre} : Dans la définition, $X$ est simplement un ensemble.
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Produit} : Un produit$^{[3]}$ est caractérisé par deux projecteurs tels que toutes les informations du produit y sont contenues. Ni plus ni moins.
+                \begin{center}
+                \begin{tikzcd}[ampersand replacement=\&]
+                    \&  \& Y \arrow[rrdd, "f_2"] \arrow[lldd, "f_1"'] \arrow[dd, "f", dashed] \&  \&     \\
+                    \&  \&                                                                    \&  \&     \\
+                X_1 \&  \& X_1\times X_2 \arrow[ll, "\pi_1"] \arrow[rr, "\pi_2"']             \&  \& X_2
+                \end{tikzcd}
+                \end{center}
+        }
+
+        \coloredbox{colorthree!50!}
+        {
+            \textbf{Algèbre enveloppante universelle} : Étant donné une K-algèbre de Lie $\mathfrak g$, peut-t-on construire une algèbre associative dont le commutateur correspond au crochet de Lie de $\mathfrak g$ ?
+
+            \begin{enumerate}
+                \item \emph{Algèbre tensorielle} : $T(\mathfrak g) := \sum_{n=0}^\infty{\mathfrak g^{\otimes n}}$ avec $\mathfrak g^{\otimes 0}=K$ et $\sigma:\mathfrak g\to T(\mathfrak g)$.
+                \item \emph{Algèbre enveloppante} : $[X, Y]\overset!=X\otimes Y-Y\otimes X$. On a l'algèbre enveloppante $U(\mathfrak g):=T(\mathfrak g)/\sim$.
+                \item \smallskip\emph{Propriété universelle} : Soit $\varphi$ un homomorphisme t.q. $\varphi([X, Y])=\varphi(X)\varphi(Y)-\varphi(Y)\varphi(X)$, alors il existe un unique homomorphisme $\Tilde\varphi:U(\mathfrak g)\to A$ tel que le diagramme commute
+
+                \begin{tikzcd}[ampersand replacement=\&]
+                \mathfrak g \arrow[rr, "\sigma"] \arrow[rrdd, "\varphi"'] \&  \& U(\mathfrak g) \arrow[dd, "\exists!\Tilde\varphi", dashed] \\
+                                                                        \&  \&                                                \\
+                                                                        \&  \& A                                             
+                \end{tikzcd}
+            \end{enumerate}
+        }
+    }
+
+	\plainblock[2]{($1.286*(xshift)-25.5*(yshift)$)}{26cm}
+    {En pratique ?}
+    {
+        \newline\newline
+        Le centre de l'algèbre enveloppante $U(\mathfrak g)$ caractérise les \textbf{opérateurs de Casimir}. Le carré du moment angulaire $\mathbf J^2$ est l'exemple typique, $\mathbf J^2:=j_x^2+j_y^2+j_z^2=l(l+1)$. Plus précisément, $$C:=\sum\nolimits_{i=1}^n{X_iX^i}\in U(\mathfrak g),\qquad[C, X_i]=0,\qquad X_i,X^i\in\mathfrak g.$$
+    }
+
+	\getcurrentrow{note}
+	\coordinate (currenty) at ($(currentrow)+(xshift)-0.8*(yshift)$);
+
+    \blocknode
+    {Le lemme de Yoneda}
+    {
+        Il s'agit d'un résultat central de la théorie des catégories$^{[1]}$ : pour tout objet $C\in\mathcal C$ et pour tout foncteur $F\in\textbf{Fun}\left(\mathcal C^\text{op}, \textbf{Set}\right)$, il existe un unique isomorphisme $\boxed{\text{Hom}(Y(C), F)\cong F(C)}$. Un corollaire important est que $\boxed{Y(C)\cong Y(D)\Leftrightarrow C\cong D}$.
+    }
+
+    %\plainblock[-2]{($-46.5*(yshift)+(xshift)$)}{32cm}
+    \calloutblock[-2]{($-46*(yshift)+1.5*(xshift)$)}{($-48*(yshift)+(xshift)$)}{32cm}
+    {
+        \begin{itemize}[label=\textcolor{azure(colorwheel)}{\textbullet}]
+            \item L'entité $\text{Hom}(-, A):\mathcal C^\text{op}\to\textbf{Set}$ est un \textbf{foncteur représentant}.
+            \item L'élément $Y(C)$ est l'\textbf{intégration de Yoneda}.
+            \item La catégorie $\textbf{Fun}(\mathcal C^\text{op}, \textbf{Set})$ est la catégorie des foncteurs $\mathcal C^\text{op}\to\textbf{Set}.$
+            \item Le lemme de Yoneda généralise le \textbf{théorème de Cayley}.
+        \end{itemize}
+    }
+
+	\getcurrentrow{note}
+	\coordinate (currenty) at ($(currentrow)+(xshift)-1*(yshift)$);
+
+	\blocknode{Références}
+	{
+		\begin{enumerate}
+			\item Mac Lane, Saunders. \textit{Categories for the Working Mathematician}, 2nd ed. Springer, 1998.
+			\item Awodey, Steve. \textit{Category Theory}, 2nd ed. Oxford University Press, 2010.
+            \item Milewski, Bartosz. \textit{Category Theory for Programmers}. Open Access Book, 2017.
+		\end{enumerate}
+	}
+
+\end{tikzpicture}
+\end{document}
