@@ -6,7 +6,7 @@ ___
 
 ## Contexte
 
-Le [projet personnel]((https://webcontent.umons.ac.be/web/fr/pde/2023-2024/ue/US-B3-SCPHYS-013-M.htm)) consistait en une semaine de stage au sein des bureaux et laboratoires du département de physique de l'UMons. Les étudiants devaient choisir un nouveau sujet de physique à étudier et explorer de manière autonome.
+Le [projet personnel](https://webcontent.umons.ac.be/web/fr/pde/2023-2024/ue/US-B3-SCPHYS-013-M.htm) consistait en une semaine de stage au sein des bureaux et laboratoires du département de physique de l'UMons. Les étudiants devaient choisir un nouveau sujet de physique à étudier et explorer de manière autonome.
 
 À l'issue du stage, ils devaient rédiger un rapport rendant compte de leur travail. Quelques semaines plus tard, une présentation sous forme de poster était également requise pour synthétiser et expliciter les résultats du stage.
 
